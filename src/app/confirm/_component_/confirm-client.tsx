@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getTradeQuantity } from "../../api/confirm";
 import { summaryProductInfo } from "@/app/api/chat";
 
-import { changeTradeStatus, confirmTradeQuantity } from "@/app/api/status";
+import { confirmTradeQuantity } from "@/app/api/status";
 import { useRouter } from "next/navigation";
 import { QuantityUser } from "@/types/confirm-review";
 
@@ -61,7 +61,7 @@ export default function ConfirmClient({ id }: { id: string }) {
         goodsId,
         users.map(({ memberId, quantity }) => ({ memberId, quantity }))
       );
-      await changeTradeStatus(goodsId, "COMPLETED");
+
       alert("수량 등록 되었습니다");
       router.push("/history/sales");
     } catch (err) {
