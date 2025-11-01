@@ -74,5 +74,23 @@ export default function ClientProvider({
     }
   };
 
-  return <>{children}</>;
+  return (
+    <>
+      <button
+        onClick={requestPermission}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          padding: "8px 14px",
+          borderRadius: 8,
+          background: "#4f46e5",
+          color: "white",
+        }}
+      >
+        알림 허용
+      </button>
+      {children}
+    </>
+  );
 }
