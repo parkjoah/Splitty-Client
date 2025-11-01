@@ -204,7 +204,7 @@ export default function Chat({ goodsId }: { goodsId: number }) {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 rounded-[10px] px-4 py-6 typo-r16 focus:outline-none focus:ring focus:ring-gray-200 bg-[#F2F2F2]"
+          className="flex-1 rounded-[10px] px-4 py-3 typo-r16 focus:outline-none focus:ring focus:ring-gray-200 bg-[#F2F2F2]"
           placeholder="메세지 보내기"
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
