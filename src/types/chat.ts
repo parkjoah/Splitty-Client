@@ -16,7 +16,7 @@ export type ChatUser = {
 export type ChatMessage = {
   id: number;
   senderId: number;
-  type: "TEXT" | "ENTER";
+  type: "TEXT" | "ENTER" | "LEAVE";
   message: string;
   createdAt: string;
 };
