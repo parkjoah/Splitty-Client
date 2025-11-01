@@ -93,7 +93,7 @@ export default function UploadPage() {
   return (
     <div className="relative pt-[47px] pb-[80px]">
       <UploadBottomSection
-        price={`${oneProductPrice.toLocaleString()}원`}
+        price={`${Number(oneProductPrice).toLocaleString()}원`}
         onClick={handleSubmit}
       />
       <div className="px-4 py-3 fixed top-0 h-[95px] w-full bg-[white] pt-[27px] items-center flex border-b border-[#F2F2F2] ">
