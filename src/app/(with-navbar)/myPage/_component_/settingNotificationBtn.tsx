@@ -73,11 +73,13 @@ export default function SettingNotificationBtn() {
 
   return (
     <>
-      <button className="flex gap-4 items-center" onClick={requestPermission}>
+      <button
+        className="flex gap-4 items-center pl-[2px]"
+        onClick={requestPermission}
+      >
         <Image src={myNotice} alt="알림설정" />
-        <p>관심목록</p>
+        <p>알림설정</p>
       </button>
-      ;
     </>
   );
 }
