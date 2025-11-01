@@ -66,6 +66,23 @@ export default function HistoryItemBox({
     },
   });
 
+  const { mutate: leaveTrade } = useMutation({
+    mutationFn: async () =>
+      apiFetch(`/trade/leave?goodsId=${product.id}`, {
+        method: "PUT",
+      }),
+    onSuccess: () => {
+      alert("거래에서 나갔습니다.");
+      queryClient.invalidateQueries({
+        queryKey: ["history", "purchases", "OPEN"],
+      });
+    },
+    onError: (err) => {
+      console.error(err);
+      alert("거래 나가기에 실패했습니다.");
+    },
+  });
+
   const handleAction = () => {
     if (kind === "sales") {
       switch (status) {
@@ -82,7 +99,7 @@ export default function HistoryItemBox({
     } else if (kind === "purchases") {
       switch (status) {
         case "OPEN":
-          // mutate("나가기???");
+          leaveTrade();
           break;
         case "COMPLETED":
           router.push(`/review/${product?.id}`);
