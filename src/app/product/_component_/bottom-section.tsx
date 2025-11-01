@@ -71,7 +71,7 @@ export default function ProductDetailBottomSection({
 
   return (
     <div>
-      <div className="fixed bottom-0 bg-white flex  w-full typo-r12 items-center align-center px-4 pb-[29px] py-2 border-t border-[#F2F2F2] h-[80px] justify-between">
+      <div className="fixed bottom-0 bg-white flex  w-full typo-r12 items-center align-center px-4 pb-[29px] py-2 border-t border-[#F2F2F2] h-[80px] justify-between ">
         <div className="flex gap-4 items-center">
           <LikePopBtn goodsId={goodsId} />
           <div className="flex flex-col border-l pl-4 border-[#F2F2F2]">

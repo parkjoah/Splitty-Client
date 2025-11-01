@@ -2,8 +2,7 @@
 import Image from "next/image";
 import homeWhite from "@/assets/icons/homeWhite.svg";
 import homebk from "@/assets/icons/homebkBig.svg";
-import personIcon from "@/assets/icons/product_person.svg";
-import locationIcon from "@/assets/icons/product_location.svg";
+
 import Link from "next/link";
 import BackBtn from "../../../components/backBtn";
 import SellerInfo from "../_component_/seller-section";
@@ -14,10 +13,15 @@ import { useQuery } from "@tanstack/react-query";
 import BackBkBtn from "@/components/back-bk-btn";
 import { useEffect, useState } from "react";
 import SellerSalesList from "./seller-sales-list";
+import ProductInfoSection from "./product-info-section";
+import UserInfoSkeleton from "@/components/skeleton/user-info-skeletion";
+import ProductDetilSkeleton from "@/components/skeleton/product-detil-skeleton";
+import ProductDetailBottomSkeleton from "./product-detail-bottom-skeleton";
+import ProductDetailSellerSaleSkeleton from "@/components/skeleton/product-detail-sellerSale-skeleton";
 
 export default function ProductDetailClient({ id }: { id: number }) {
   const goodsId = id;
-  const { data: product } = useQuery({
+  const { data: product, isLoading } = useQuery({
     queryKey: ["goodsId", goodsId],
     queryFn: () => getProductDetail(goodsId),
   });
@@ -64,37 +68,35 @@ export default function ProductDetailClient({ id }: { id: number }) {
         imageUrls={product?.imageName || []}
       />
       {/* 정보영역 */}
-      <section className="mx-4 ">
-        {/* 1- 판매자 정보 */}
-        <SellerInfo info={product?.seller} />
-        {/* 2- 상세정보 */}
-        <div className="py-4 gap-4 flex flex-col border-b border-[#F2F2F2]  ">
-          <div className="flex flex-col gap-1">
-            <h2 className="typo-b18">{product?.name}</h2>
-            <p className="typo-r12 text-[#8C8C8C]">{product?.category}</p>
-          </div>
-          <div className="typo-r12">
-            <p className="flex gap-1">
-              <Image src={personIcon} alt="person" />
-              {`${product?.currParticipants}명 참여중`}
-            </p>
-            <p className="flex gap-1">
-              <Image src={locationIcon} alt="location" />
-              {`${product?.preferredLocation}`}
-            </p>
-          </div>
-          <div className="typo-r14">{product?.description}</div>
-          <div className="text-[#8C8C8C]">{`관심 ${product?.totalWishlist} · 조회 ${product?.viewCount}`}</div>
-        </div>
-      </section>
-      {/* 판매상품 목록*/}
-      <SellerSalesList sellerInfo={product?.seller} />
-      <ProductDetailBottomSection
-        price={product?.unitPrice}
-        rest={product?.leftQuantity}
-        goodsId={goodsId}
-        status={status}
-      />
+
+      {isLoading ? (
+        <>
+          <section className="mx-4 ">
+            <UserInfoSkeleton />
+            <ProductDetilSkeleton />
+          </section>
+          <ProductDetailSellerSaleSkeleton />
+          <ProductDetailBottomSkeleton />
+        </>
+      ) : (
+        <>
+          {" "}
+          <section className="mx-4 ">
+            {/* 1- 판매자 정보 */}
+            <SellerInfo info={product?.seller} />
+            {/* 2- 상세정보 */}
+            <ProductInfoSection product={product} />
+          </section>
+          {/* 판매상품 목록*/}
+          <SellerSalesList sellerInfo={product?.seller} />
+          <ProductDetailBottomSection
+            price={product?.unitPrice}
+            rest={product?.leftQuantity}
+            goodsId={goodsId}
+            status={status}
+          />
+        </>
+      )}
     </div>
   );
 }

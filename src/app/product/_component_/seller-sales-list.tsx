@@ -5,7 +5,7 @@ import Image from "next/image";
 import ItemBox from "./itemBox";
 import Link from "next/link";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCursorMemberSales } from "../../../hooks/useCursorMemberSales";
 
 export default function SellerSalesList({
@@ -19,32 +19,8 @@ export default function SellerSalesList({
     setMemberId(sellerInfo?.id);
   }, [sellerInfo]);
 
-  const observerRef = useRef<HTMLDivElement | null>(null);
-  const isCalledNext = useRef(false);
-
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useCursorMemberSales(memberId!);
-
-  useEffect(() => {
-    const node = observerRef.current;
-    if (!node || !hasNextPage || isFetchingNextPage) return;
-
-    const observer = new IntersectionObserver((entries, obs) => {
-      const target = entries[0];
-      if (target.isIntersecting && !isCalledNext.current) {
-        isCalledNext.current = true;
-        fetchNextPage();
-        obs.unobserve(target.target);
-      }
-    });
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-  useEffect(() => {
-    isCalledNext.current = false;
-  }, [data]);
+  const { data } = useCursorMemberSales(memberId!);
+  const salesItems = data?.pages[0]?.items?.slice(0, 6) ?? [];
 
   return (
     <section className="mx-4 py-4 gap-4 flex flex-col">
@@ -55,30 +31,27 @@ export default function SellerSalesList({
         </Link>
       </div>
       <div className="gap-4 w-full">
-        {data?.pages.map((page, pageIdx) => (
-          <div key={pageIdx} className="col-span-2 grid grid-cols-2 gap-4">
-            {page.items.map(
-              (product: {
-                id: number;
-                imageName: string;
-                name: string;
-                price: number;
-                imageUrlPrefix: string;
-              }) => (
-                <ItemBox
-                  p={{
-                    id: product?.id,
-                    thumbImg: product?.imageUrlPrefix + product?.imageName,
-                    title: product?.name,
-                    price: product?.price,
-                  }}
-                  key={product?.id}
-                />
-              )
-            )}
-          </div>
-        ))}
-        <div ref={observerRef} />
+        <div className="col-span-2 grid grid-cols-2 gap-4">
+          {salesItems.map(
+            (product: {
+              id: number;
+              imageName: string;
+              name: string;
+              price: number;
+              imageUrlPrefix: string;
+            }) => (
+              <ItemBox
+                p={{
+                  id: product?.id,
+                  thumbImg: product?.imageUrlPrefix + product?.imageName,
+                  title: product?.name,
+                  price: product?.price,
+                }}
+                key={product?.id}
+              />
+            )
+          )}
+        </div>
       </div>
     </section>
   );
