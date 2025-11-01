@@ -29,11 +29,17 @@ export default function ClientProvider({
         const data = payload.data;
 
         if (Notification.permission === "granted") {
-          new Notification(title, {
+          const notification = new Notification(title, {
             body,
             icon,
             data,
           });
+          notification.onclick = () => {
+            window.focus();
+            if (data?.redirectUrl) {
+              window.location.href = data.redirectUrl;
+            }
+          };
         } else {
           console.warn("알림 권한이 거부됨");
         }
