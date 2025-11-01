@@ -67,11 +67,17 @@ export const getMyPurchasesList = async (
 export const getMemberSalesList = async ({
   pageParam,
 }: {
-  pageParam?: { lastId: number | null; memberId: number };
+  pageParam?: {
+    lastId: number | null;
+    memberId: number;
+    lastCreatedAt: string | null;
+  };
 }) => {
   const queryParams = new URLSearchParams();
 
   if (pageParam?.lastId) queryParams.set("cursorId", String(pageParam.lastId));
+  if (pageParam?.lastCreatedAt)
+    queryParams.set("cursorCreatedAt", pageParam.lastCreatedAt);
   queryParams.set("status", "OPEN");
   const url = `/member/${pageParam?.memberId}/sales?${queryParams.toString()}`;
   const res = await apiFetch(url);

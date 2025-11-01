@@ -6,14 +6,15 @@ export const useCursorMemberSales = (memberId: number) => {
     queryKey: ["memberSalesList", memberId],
     queryFn: ({ pageParam }) =>
       getMemberSalesList({
-        pageParam: pageParam ?? { lastId: null, memberId },
+        pageParam: pageParam ?? { lastId: null, memberId, lastCreatedAt: null },
       }),
-    initialPageParam: { lastId: null, memberId },
+    initialPageParam: { lastId: null, memberId, lastCreatedAt: null },
     getNextPageParam: (lastPage) => {
       return lastPage.hasNext
         ? {
             lastId: lastPage.nextCursor.lastId ?? null,
             memberId: memberId,
+            lastCreatedAt: lastPage.nextCursor.lastCreatedAt ?? null,
           }
         : undefined;
     },
