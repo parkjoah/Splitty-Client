@@ -177,7 +177,7 @@ export default function Chat({ goodsId }: { goodsId: number }) {
                   </div>
                 )}
                 <div
-                  className={`px-3 py-2 text-sm break-words ${
+                  className={`px-3 py-2 text-sm ${
                     isMine
                       ? "bg-[#4F4DF8] text-white rounded-[10px]"
                       : "bg-[#F2F2F2] text-gray-900 rounded-[10px]"
@@ -200,11 +200,11 @@ export default function Chat({ goodsId }: { goodsId: number }) {
       </div>
 
       {/* 입력창*/}
-      <div className="fixed bottom-0left-0 w-full bg-white px-4 py-3  pb-5  flex items-center gap-2 border-t border-gray-200">
+      <div className="fixed bottom-0 left-0 w-full bg-white px-4 py-3  pb-5  flex items-center gap-2 border-t border-gray-200">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 rounded-[10px] px-4 py-2 typo-r16 focus:outline-none focus:ring focus:ring-gray-200 bg-[#F2F2F2]"
+          className="flex-1 rounded-[10px] px-4 py-6 typo-r16 focus:outline-none focus:ring focus:ring-gray-200 bg-[#F2F2F2]"
           placeholder="메세지 보내기"
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
