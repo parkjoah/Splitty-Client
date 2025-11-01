@@ -31,6 +31,6 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const urlToOpen = event.notification.data?.url || "/";
+  const urlToOpen = event.notification.data?.redirectUrl || "/";
   event.waitUntil(clients.openWindow(urlToOpen));
 });
