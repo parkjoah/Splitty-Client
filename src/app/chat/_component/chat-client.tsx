@@ -132,7 +132,7 @@ export default function Chat({ goodsId }: { goodsId: number }) {
           const userPrfImg = user?.profileImageUrl || samplePrf;
           const msgKey = msg.id ?? msg.createdAt ?? Math.random();
 
-          if (msg.type === "ENTER")
+          if (msg.type === "ENTER" || "LEAVE")
             return (
               <div
                 key={msgKey}
