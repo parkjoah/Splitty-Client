@@ -2,7 +2,7 @@
 import clock from "@/assets/icons/searchClock.svg";
 import close from "@/assets/icons/searchClose.svg";
 import ProductItem from "@/components/product-item";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { getMySearchRec } from "../api/search";
@@ -20,6 +20,7 @@ export default function SearchPage() {
     queryFn,
   });
   const recentList = searchRec || [];
+  const queryClient = useQueryClient();
 
   const searchParams = useSearchParams();
   const keyword = searchParams.get("q") || "";
@@ -48,11 +49,13 @@ export default function SearchPage() {
     await apiFetch(`/member/me/search/${searchHistoryId}`, {
       method: "DELETE",
     });
+    queryClient.invalidateQueries({ queryKey });
   };
   const handleDeleteAllSearchHistory = async () => {
     await apiFetch(`/member/me/search`, {
       method: "DELETE",
     });
+    queryClient.invalidateQueries({ queryKey });
   };
 
   return (
