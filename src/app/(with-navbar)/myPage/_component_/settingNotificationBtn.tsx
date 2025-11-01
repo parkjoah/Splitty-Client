@@ -4,12 +4,9 @@ import { useEffect } from "react";
 import { getToken, onMessage } from "firebase/messaging";
 import { messaging } from "@/lib/firebase-config";
 import { apiFetch } from "@/app/api";
-
-export default function ClientProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import Image from "next/image";
+import myNotice from "@/assets/icons/mypageNoticeIcon.svg";
+export default function SettingNotificationBtn() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
@@ -76,21 +73,11 @@ export default function ClientProvider({
 
   return (
     <>
-      <button
-        onClick={requestPermission}
-        style={{
-          position: "fixed",
-          bottom: 20,
-          right: 20,
-          padding: "8px 14px",
-          borderRadius: 8,
-          background: "#4f46e5",
-          color: "white",
-        }}
-      >
-        알림 허용
+      <button className="flex gap-4 items-center" onClick={requestPermission}>
+        <Image src={myNotice} alt="알림설정" />
+        <p>관심목록</p>
       </button>
-      {children}
+      ;
     </>
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import gpsIcon from "@/assets/icons/gpsIcon.svg";
 import { postLocation } from "@/app/api/member";
 import { useQueryClient } from "@tanstack/react-query";
+import SettingNotificationBtn from "./settingNotificationBtn";
 
 export default function MyLocation() {
   const queryClient = useQueryClient();
@@ -30,6 +31,7 @@ export default function MyLocation() {
         <Image src={gpsIcon} alt="위치설정" />
         <p>내 지역 설정</p>
       </div>
+      <SettingNotificationBtn />
     </section>
   );
 }
