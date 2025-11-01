@@ -39,6 +39,7 @@ export default function NoticePage() {
               imageName: string;
               imageUrlPrefix: string;
               title: string;
+              redirectUrl: string;
             }) => <NoticeItemBox key={n.id} {...n} />
           )
         )}

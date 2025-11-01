@@ -1,5 +1,6 @@
 import { formatTimeAgo } from "@/hooks/formatTImeAgo";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function NoticeItemBox({
   body,
@@ -7,16 +8,22 @@ export default function NoticeItemBox({
   createdAt,
   imageName,
   imageUrlPrefix,
+  redirectUrl,
 }: {
   body: string;
   title: string;
   createdAt: string;
   imageName: string;
   imageUrlPrefix: string;
+  redirectUrl: string;
 }) {
   const imgUrl = imageName && imageUrlPrefix + imageName;
+  const router = useRouter();
   return (
-    <div className="flex gap-3 py-3 border-b border-[#F2F2F2] h-auto">
+    <div
+      className="flex gap-3 py-3 border-b border-[#F2F2F2] h-auto"
+      onClick={() => router.push(redirectUrl)}
+    >
       <Image
         src={imgUrl}
         alt="img"
