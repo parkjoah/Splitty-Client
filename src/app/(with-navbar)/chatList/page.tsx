@@ -39,7 +39,7 @@ export default function ChatPage() {
         </div>
       </div>
 
-      <div className="pt-[125px]">
+      <div className="py-[125px] ">
         {data?.map((c: chatListItem) => (
           <ChatListItem
             chatListData={c}
