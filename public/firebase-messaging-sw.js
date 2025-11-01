@@ -34,3 +34,12 @@ self.addEventListener("notificationclick", (event) => {
   const urlToOpen = event.notification.data?.redirectUrl || "/";
   event.waitUntil(clients.openWindow(urlToOpen));
 });
+
+onMessage(messaging, (payload) => {
+  console.log("포어그라운드", payload);
+
+  new Notification(payload.notification?.title || "새 알림", {
+    body: payload.notification?.body,
+    icon: "/logoIcons/icon512_rounded.png",
+  });
+});

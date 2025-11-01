@@ -22,6 +22,21 @@ export default function ClientProvider({
     if (messaging) {
       unsubscribe = onMessage(messaging, (payload) => {
         console.log("새 FCM 메시지:", payload);
+
+        const title = payload.notification?.title || "새 알림";
+        const body = payload.notification?.body || "";
+        const icon = "/logoIcons/icon512_rounded.png";
+        const data = payload.data;
+
+        if (Notification.permission === "granted") {
+          new Notification(title, {
+            body,
+            icon,
+            data,
+          });
+        } else {
+          console.warn("알림 권한이 거부됨");
+        }
       });
     }
 
